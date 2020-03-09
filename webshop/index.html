@@ -12,11 +12,13 @@
             border: 1px solid #000;
         }
     </style>
+    
 </head>
 <body>
     <header class="mx-auto">
         <h1>Cupcakes</h1>
     </header>
+    
     <div class="container">
         <div class="row mx-0">
             <div class="col-7">
@@ -28,15 +30,20 @@
         </div>
         <div class="row mx-0">
             <div class="col-7" id="products-page">
+                    
             </div>
-            <div class="col-5" id="cart-page">
-                <div class="card">
-                    <h1>Items</h1>
+            <div class="col-5">
+                <div class="card px-2 pt-3 my-3" id="cart-page">
+                </div>
+                <div class="card d-flex justify-content-between">
+                    <p>
+                        Total Price: <span id="cart-total">0</span> kr
+                    </p>
+                    <button class="btn btn-primary">Buy</button>
                 </div>
             </div>
         </div>
     </div>
     <script src="functions.js"></script>
-    <!-- <script src="test.js"></script> -->
 </body>
 </html>
