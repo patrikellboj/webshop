@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', (event) => {
   let productPage = document.querySelector('#products-page');
+  let cartPage = document.querySelector('#cart-page');
   let cupcakesObj = {};
+
   fetch('./cupcakes.json')
       .then(response => response.json())
       .then(saveData)
@@ -39,7 +41,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         cart.items.forEach(item => {
             totalAmount += item.price * item.amount;
         });
-        return totalAmount
+        return totalAmount;
       }
 
       function addToCart (item, amount) {
@@ -49,6 +51,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
         item.amount = amount;
         cart.items.push(item);
         console.log(cart);
+        updateCartView();
+      }
+
+      function updateCartView () {
+        // cartPage.innerHTML = '';
+          cart.items.forEach(e => {
+            cartPage.innerHTML += `<p>item: ${e.name}. price: ${e.price}. amount: ${e.amount}</p>`
+            });
       }
 
       document.addEventListener('click', function(e) {
@@ -57,9 +67,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             amount = Number(amount);
             console.log(cupcakesObj[e.target.id]);
             addToCart(cupcakesObj[e.target.id], amount)
-        } else {
-            console.log('buhu! not the target');
-        }    
+        }   
     });
 
     
