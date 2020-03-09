@@ -1,42 +1,42 @@
 [
   {
-      "name": "Butter Sweet Cupcake",
-      "price": 45
+    "name": "Butter Sweet Cupcake",
+    "price": 45
   },
   {
-      "name": "Vanilla Ice Cupcake",
-      "price": 30
+    "name": "Vanilla Ice Cupcake",
+    "price": 30
   },
   {
-      "name": "Chocolate Inferno Cupcake",
-      "price": 30
+    "name": "Chocolate Inferno Cupcake",
+    "price": 30
   },
   {
-      "name": "Classic Old Fashion Cupcake",
-      "price": 30
+    "name": "Classic Old Fashion Cupcake",
+    "price": 30
   },
   {
-      "name": "Rasberry Cupcake",
-      "price": 50
+    "name": "Rasberry Cupcake",
+    "price": 50
   },
   {
-      "name": "Blueberry Cupcake",
-      "price": 50
+    "name": "Blueberry Cupcake",
+    "price": 50
   },
   {
-      "name": "Mango Madness Cupcake",
-      "price": 60
+    "name": "Mango Madness Cupcake",
+    "price": 60
   },
   {
-      "name": "The Boring Cupcake",
-      "price": 35
+    "name": "The Boring Cupcake",
+    "price": 35
   },
   {
-      "name": "Maniac liquorice Cupcake",
-      "price": 40
+    "name": "Maniac liquorice Cupcake",
+    "price": 40
   },
   {
-      "name": "Sugar Bomb Cupcake",
-      "price": 40
+    "name": "Sugar Bomb Cupcake",
+    "price": 40
   }
 ]

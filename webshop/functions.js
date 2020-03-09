@@ -1,36 +1,66 @@
 document.addEventListener('DOMContentLoaded', (event) => {
   let productPage = document.querySelector('#products-page');
+  let cupcakesObj = {};
   fetch('./cupcakes.json')
       .then(response => response.json())
-      .then(data => data.forEach(ele => {
+      .then(saveData)
+      .then(data => data.forEach((item, index) => {
+          console.log(item);
           productPage.innerHTML += `  <div class="card mt-3">
                                           <div class="card-body">
-                                              <h5 class="card-title">${ele.name}</h5>
+                                              <h5 class="card-title">${item.name}</h5>
                                               <div class="float-right">
-                                                  <p class="card-text">Price: ${ele.price} kr</p>
-                                                  <label for="exampleFormControlSelect1">Example select</label>
-                                                  <select class="form-control" id="selector" style="width: 4rem;">
-                                                      <option>1</option>
-                                                      <option>2</option>
-                                                      <option>3</option>
-                                                      <option>4</option>
-                                                      <option>5</option>
-                                                      <option>6</option>
-                                                      <option>7</option>
-                                                      <option>8</option>
-                                                      <option>9</option>
-                                                      <option>10</option>
-                                                  </select>
-                                                  <a href="#" class="btn btn-success addToCart">Add To Cart</a>
+                                                  <p class="card-text">Price: ${item.price} kr</p>
+                                                  <label for="exampleFormControlSelect1">Amount:</label>
+                                                    <input type="number" id="cupcakeNo${index}" value="1" min="1" max="10">
+                                                  <a href="#" class="btn btn-success addToCart" id="${index}">Add To Cart</a>
                                               </div>
                                           </div>
                                       </div>`
       }))
-      .catch(err => console.log(err))
-      
-      document.querySelector('.addToCart').addEventListener(function(e){
-          console.log(e.target);
-          
-      })
-      
-  })
+      .catch(err => console.log(err));
+
+      function saveData(dataFromJson) {
+        cupcakesObj = dataFromJson;
+        return cupcakesObj;
+      }
+
+
+      const cart = {
+        items: [],
+      };
+
+      function getNumberOfItems () {
+        return cart.items.length;
+      }
+
+      function getTotalAmount () {
+        let totalAmount = 0;
+        cart.items.forEach(item => {
+            totalAmount += item.price * item.amount;
+        });
+        return totalAmount
+      }
+
+      function addToCart (item, amount) {
+        // TODO: kolla om varan redan finns i varukorgen
+        // om den finns -> plussa på amount och lägg inte till en ny
+        console.log('addToCart item: ' + item);
+        item.amount = amount;
+        cart.items.push(item);
+        console.log(cart);
+      }
+
+      document.addEventListener('click', function(e) {
+        if (e.target && e.target.nodeName === 'A') {
+            let amount = document.getElementById('cupcakeNo' + e.target.id).value;
+            amount = Number(amount);
+            console.log(cupcakesObj[e.target.id]);
+            addToCart(cupcakesObj[e.target.id], amount)
+        } else {
+            console.log('buhu! not the target');
+        }    
+    });
+
+    
+  });
