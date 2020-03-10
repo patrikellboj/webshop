@@ -71,14 +71,15 @@ function displayItemsInCart() {
                                               <h5 class="card-title">${cupcake.name}</h5>
                                               <div class="float-right">
                                                   <div class="card-text">
-                                                  <p>Amount</p>
-                                                  <div class="btn-group btn-group-sm">
-                                                    <button type="button" class="btn btn-primary subtractAmount">-</button>
-                                                    <span class="btn">${cupcake.amount}</span>
-                                                    <button type="button" class="btn btn-primary addAmount">+</button>
-                                                  </div>
+                                                    <p>Amount</p>
+                                                    <div class="btn-group btn-group-sm">
+                                                        <button type="button" class="btn btn-primary subtractAmount">-</button>
+                                                        <span class="btn">${cupcake.amount}</span>
+                                                        <button type="button" class="btn btn-primary addAmount">+</button>
+                                                    </div>
                                                     <br/>
                                                     <p>Price: <span>${cupcake.price * cupcake.amount}</span> kr</p>
+                                                    <button type="button" class="btn btn-danger btn-sm remove-current-item">Remove item</button>
                                                   </div>
                                               </div>
                                           </div>
@@ -89,6 +90,7 @@ function displayItemsInCart() {
 
   let subtractAmountInCart = document.querySelectorAll('.subtractAmount');
   let addAmountInCart = document.querySelectorAll('.addAmount');
+  let removeCurrentItem = document.querySelectorAll('.remove-current-item');
 
   subtractAmountInCart.forEach(element => {
     element.addEventListener('click', function () {
@@ -105,6 +107,14 @@ function displayItemsInCart() {
         updateItemAmount(cupcakeName, add);
     })
   })
+
+  removeCurrentItem.forEach(element => {
+    element.addEventListener('click', e => {
+        let cupcakeName = e.target.closest('.card-body').firstElementChild.innerHTML;
+        console.log(cupcakeName);
+        removeItemFromCart(cupcakeName);
+    })
+  })
 } // displayItemsInCart() end
 
 function updateTotalPrice(cupcakePrice, cupcakeAmount) {
@@ -112,7 +122,7 @@ function updateTotalPrice(cupcakePrice, cupcakeAmount) {
 }
 
 function updateItemAmount(cupcakeName, addOrSubtract) {
-    if (cart.some(element => element.name === cupcakeName)) {
+    if (cart.some(element => element.name === cupcakeName)) { // redundant?
         let currCupcake = cart.find(cupcake => cupcake.name === cupcakeName);
         // adding or subtracting depending on if addOrSubtract is true or false
         addOrSubtract ? 
@@ -125,4 +135,11 @@ function updateItemAmount(cupcakeName, addOrSubtract) {
         }
         displayItemsInCart();
     }
+}
+
+function removeItemFromCart(cupcakeName) {
+    let currCupcake = cart.find(cupcake => cupcake.name === cupcakeName);
+    let objToRemoveIndex = cart.findIndex(e => e === currCupcake);
+    cart.splice(objToRemoveIndex, 1);
+    displayItemsInCart();
 }
