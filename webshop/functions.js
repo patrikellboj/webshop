@@ -60,6 +60,7 @@ function displayProducts(data) {
   })
 } // function displayProducts end
 function displayItemsInCart() {
+  console.log(cart);
   //Print out all items in cart to UI and update total price
   let cartPage = document.querySelector('#cart-page');
   cartPage.innerHTML = '';
@@ -93,7 +94,6 @@ function displayItemsInCart() {
     element.addEventListener('click', function () {
         let cupcakeName = this.parentNode.parentNode.parentNode.parentNode.firstElementChild.innerHTML;
         let subtract;
-        console.log(cupcakeName);
         updateItemAmount(cupcakeName, subtract);
     })
   })
@@ -102,7 +102,6 @@ function displayItemsInCart() {
     element.addEventListener('click', function () {
         let cupcakeName = this.parentNode.parentNode.parentNode.parentNode.firstElementChild.innerHTML;
         let add = true;
-        console.log(cupcakeName);
         updateItemAmount(cupcakeName, add);
     })
   })
@@ -115,7 +114,15 @@ function updateTotalPrice(cupcakePrice, cupcakeAmount) {
 function updateItemAmount(cupcakeName, addOrSubtract) {
     if (cart.some(element => element.name === cupcakeName)) {
         let currCupcake = cart.find(cupcake => cupcake.name === cupcakeName);
-        addOrSubtract ? currCupcake.amount++ : currCupcake.amount--;
+        // adding or subtracting depending on if addOrSubtract is true or false
+        addOrSubtract ? 
+            currCupcake.amount++ : 
+            currCupcake.amount--;
+        // Removes item from cart if the amount of current item is 0
+        if (currCupcake.amount === 0) {
+            let objToRemoveIndex = cart.findIndex(e => e === currCupcake);
+            cart.splice(objToRemoveIndex, 1);
+        }
         displayItemsInCart();
     }
 }
