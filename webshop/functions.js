@@ -24,6 +24,7 @@ document.querySelector('#buyBtn').addEventListener('click', function(){
   displayItemsInCart();
   
 })
+
 function displayProducts(data) {
   console.log(data);
   let productPage = document.querySelector('#products-page');
@@ -34,8 +35,7 @@ function displayProducts(data) {
                                               <div class="float-right">
                                                   <p class="card-text">Price: <span>${cupcake.price}</span> kr</p>
                                                   <label for="cupcakeNo">Amount:</label>
-                                                  <input type="number" id="cupcakeNo" value="1" min="1" max="10">
-                                                  <br/>
+                                                  <input type="number" value="1" min="1" max="10">
                                                   <button class="btn btn-success addToCartBtn">Add To Cart</button>
                                               </div>
                                           </div>
@@ -69,15 +69,53 @@ function displayItemsInCart() {
                                           <div class="card-body">
                                               <h5 class="card-title">${cupcake.name}</h5>
                                               <div class="float-right">
-                                                  <p class="card-text">
-                                                  Amount: <span> ${cupcake.amount} st <br/>
-                                                  Price: <span>${cupcake.price * cupcake.amount}</span> kr 
-                                                  </p>
+                                                  <div class="card-text">
+                                                  <p>Amount</p>
+                                                  <div class="btn-group btn-group-sm">
+                                                    <button type="button" class="btn btn-primary subtractAmount">-</button>
+                                                    <span class="btn">${cupcake.amount}</span>
+                                                    <button type="button" class="btn btn-primary addAmount">+</button>
+                                                  </div>
+                                                    <br/>
+                                                    <p>Price: <span>${cupcake.price * cupcake.amount}</span> kr</p>
+                                                  </div>
                                               </div>
                                           </div>
                                       </div>`
-      
-      totalPrice += (cupcake.price * cupcake.amount);
+      totalPrice += updateTotalPrice(cupcake.price, cupcake.amount);
   });
   document.querySelector('#cart-total').innerHTML = totalPrice;
+
+  let subtractAmountInCart = document.querySelectorAll('.subtractAmount');
+  let addAmountInCart = document.querySelectorAll('.addAmount');
+
+  subtractAmountInCart.forEach(element => {
+    element.addEventListener('click', function () {
+        let cupcakeName = this.parentNode.parentNode.parentNode.parentNode.firstElementChild.innerHTML;
+        let subtract;
+        console.log(cupcakeName);
+        updateItemAmount(cupcakeName, subtract);
+    })
+  })
+
+  addAmountInCart.forEach(element => {
+    element.addEventListener('click', function () {
+        let cupcakeName = this.parentNode.parentNode.parentNode.parentNode.firstElementChild.innerHTML;
+        let add = true;
+        console.log(cupcakeName);
+        updateItemAmount(cupcakeName, add);
+    })
+  })
+} // displayItemsInCart() end
+
+function updateTotalPrice(cupcakePrice, cupcakeAmount) {
+    return cupcakePrice * cupcakeAmount;
+}
+
+function updateItemAmount(cupcakeName, addOrSubtract) {
+    if (cart.some(element => element.name === cupcakeName)) {
+        let currCupcake = cart.find(cupcake => cupcake.name === cupcakeName);
+        addOrSubtract ? currCupcake.amount++ : currCupcake.amount--;
+        displayItemsInCart();
+    }
 }
