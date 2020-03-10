@@ -60,7 +60,6 @@ function displayProducts(data) {
   })
 } // function displayProducts end
 function displayItemsInCart() {
-  console.log(cart);
   //Print out all items in cart to UI and update total price
   let cartPage = document.querySelector('#cart-page');
   cartPage.innerHTML = '';
@@ -111,7 +110,6 @@ function displayItemsInCart() {
   removeCurrentItem.forEach(element => {
     element.addEventListener('click', e => {
         let cupcakeName = e.target.closest('.card-body').firstElementChild.innerHTML;
-        console.log(cupcakeName);
         removeItemFromCart(cupcakeName);
     })
   })
