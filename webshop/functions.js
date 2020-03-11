@@ -20,8 +20,7 @@ document.querySelector('#buyBtn').addEventListener('click', function(){
   console.log(JSON.parse(localStorage.getItem("cart"))); // log test att se om vi kan dra ut rätt
   
   // empty cart when you buy
-  cart = [];
-  displayItemsInCart();
+  emptyCart();
   
 })
 
@@ -85,6 +84,14 @@ function displayItemsInCart() {
                                       </div>`
       totalPrice += updateTotalPrice(cupcake.price, cupcake.amount);
   });
+  
+  // add emptyCartBtn if cart contains any item
+  if (cart.length) {
+      cartPage.innerHTML += `<button type="button" class="btn btn-danger btn-sm" id="emptyCart">Empty Cart</button>`;
+      let emptyCartBtn = document.querySelector('#emptyCart');
+      emptyCartBtn.addEventListener('click', () => emptyCart());
+  }
+
   document.querySelector('#cart-total').innerHTML = totalPrice;
 
   let subtractAmountInCart = document.querySelectorAll('.subtractAmount');
@@ -139,5 +146,10 @@ function removeItemFromCart(cupcakeName) {
     let currCupcake = cart.find(cupcake => cupcake.name === cupcakeName);
     let objToRemoveIndex = cart.findIndex(e => e === currCupcake);
     cart.splice(objToRemoveIndex, 1);
+    displayItemsInCart();
+}
+
+function emptyCart() {
+    cart = [];
     displayItemsInCart();
 }
